@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,8 @@ namespace EthereumTransactionSearch
                 c.IncludeXmlComments(xmlPath);
             });
 
+			var infuraSettings = Configuration.GetSection("Infura");
+			services.Configure<InfuraSettings>(infuraSettings);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
