@@ -31,13 +31,21 @@ namespace EthereumTransactionSearch.Controllers
         [ProducesResponseType(typeof(ApiResult), 400)]
         public async Task<IActionResult> SearchTransactions(TransactionSearchRequest transactionSearchRequest)
         {
-            _logger.LogInformation("/api/search/Transactions");
+            try
+            {
+                _logger.LogInformation("/api/search/Transactions");
 
-            //TODO model is valid
+                //TODO model is valid
 
-            await _transactionSearchService.Search(transactionSearchRequest);
+                var result = await _transactionSearchService.Search(transactionSearchRequest);
 
-            return Ok();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Exception caught!", ex);
+                return BadRequest("An error has occured");
+            }
         }
     }
 }

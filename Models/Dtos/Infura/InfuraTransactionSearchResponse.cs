@@ -16,7 +16,7 @@ namespace EthereumTransactionSearch.Dtos.Infura
 
 	public class Result
 	{
-		public List<Transactions> transactions { get; set; }
+		public List<Transactions> Transactions { get; set; }
 	}
 
 	public class Transactions
@@ -34,5 +34,7 @@ namespace EthereumTransactionSearch.Dtos.Infura
 		public string Hash { get; set; }
 
 		public string Value { get; set; }
+
+		public string TransactionIndex { get; set; }
 	}
 }

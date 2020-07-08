@@ -7,7 +7,8 @@ namespace EthereumTransactionSearch.Middleware
 	public class LogContextMiddleware
 	{
 		private readonly RequestDelegate _next;
-		private const string UserAgentHeaderKey = "User-Agent";
+		private const string _userAgentHeaderKey = "User-Agent";
+		private const string _correlationIdHeaderKey = "X-Correlation-ID";
 
 		public LogContextMiddleware(RequestDelegate next)
 		{
@@ -16,9 +17,11 @@ namespace EthereumTransactionSearch.Middleware
 
 		public async Task InvokeAsync(HttpContext context)
 		{
-			string userAgentFromHeader = context.Request.Headers.ContainsKey(UserAgentHeaderKey) ? context.Request.Headers[UserAgentHeaderKey].ToString() : null;
+			string userAgentFromHeader = context.Request.Headers.ContainsKey(_userAgentHeaderKey) ? context.Request.Headers[_userAgentHeaderKey].ToString() : null;
+			string correlationIdFromHeader = context.Request.Headers.ContainsKey(_correlationIdHeaderKey) ? context.Request.Headers[_correlationIdHeaderKey].ToString() : null;
 
-			LogContext.PushProperty("UserAgent", userAgentFromHeader);
+			LogContext.PushProperty(_userAgentHeaderKey, userAgentFromHeader);
+			LogContext.PushProperty(_correlationIdHeaderKey, correlationIdFromHeader);
 
 			await _next(context);
 		}

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace EthereumTransactionSearch.Models
 {
 	public class TransactionSearchResponse
 	{
+		public List<TransactionResults> Transactions { get; set; }
 	}
 }
