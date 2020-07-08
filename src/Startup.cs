@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Reflection;
 using EthereumTransactionSearch.Middleware;
 using EthereumTransactionSearch.Services;
 using EthereumTransactionSearch.Settings;
@@ -10,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace EthereumTransactionSearch
 {
