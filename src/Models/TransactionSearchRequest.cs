@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EthereumTransactionSearch.Models
 {
@@ -9,6 +6,7 @@ namespace EthereumTransactionSearch.Models
 	{
 		public int BlockNumber { get; set; }
 
+		[Required]
 		public string Address { get; set; }
 	}
 }
