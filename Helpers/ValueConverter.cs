@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Numerics;
 
 namespace EthereumTransactionSearch.Helpers
 {
@@ -13,9 +11,15 @@ namespace EthereumTransactionSearch.Helpers
 			return value;
 		}
 
-		public static double WeiToEther(long weiValue)
+		public static BigInteger HexToBigInt(string hexString)
 		{
-			return 0;
+			hexString = hexString.Replace("x", string.Empty);
+
+			BigInteger value = BigInteger.Parse(
+				hexString,
+				System.Globalization.NumberStyles.AllowHexSpecifier);
+
+			return value;
 		}
 
 	}

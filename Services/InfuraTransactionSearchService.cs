@@ -4,9 +4,8 @@ using EthereumTransactionSearch.Models;
 using EthereumTransactionSearch.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Nethereum.Util;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -57,22 +56,21 @@ namespace EthereumTransactionSearch.Services
 			var strContent = await response.Content.ReadAsStringAsync();
 
 			InfuraTransactionSearchResponse infuraTransactionSearchResponse = JsonConvert.DeserializeObject<InfuraTransactionSearchResponse>(strContent);
-
-			//TODO from or to?
-			var transactions = infuraTransactionSearchResponse.Result.Transactions.Where(m => m.From == transactionSearchRequest.Address).ToList();
+			
+			var transactions = infuraTransactionSearchResponse.Result.Transactions.Where(m => (m.From == transactionSearchRequest.Address || m.To == transactionSearchRequest.Address)).ToList();
 
 			TransactionSearchResponse transactionSearchResponse = new TransactionSearchResponse
 			{ 
 				Transactions = transactions.Select(m => new TransactionResults 
 				{
 					BlockHash = m.BlockHash,
-					BlockNumber = m.BlockNumber, //TODO convert from hex to number
+					BlockNumber = ValueConverter.HexToInteger(m.BlockNumber),
 					From = m.From,
 					To = m.To,
-					Gas = m.Gas, //TODO Convert from wei to ether
+					Gas = UnitConversion.Convert.FromWei(ValueConverter.HexToBigInt(m.Gas), UnitConversion.EthUnit.Ether),
 					Hash = m.Hash,
-					Value = m.Value, //TODO Convert from wei to ether
-					TransactionIndex = m.TransactionIndex //TODO convert from hex to int
+					Value = UnitConversion.Convert.FromWei(ValueConverter.HexToBigInt(m.Value), UnitConversion.EthUnit.Ether),
+					TransactionIndex = ValueConverter.HexToInteger(m.TransactionIndex)
 				}).ToList()
 			};
 

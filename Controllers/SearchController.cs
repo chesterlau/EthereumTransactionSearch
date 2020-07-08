@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using EthereumTransactionSearch.Models;
+﻿using EthereumTransactionSearch.Models;
 using EthereumTransactionSearch.Services;
-using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
 
 namespace EthereumTransactionSearch.Controllers
 {
@@ -33,17 +28,17 @@ namespace EthereumTransactionSearch.Controllers
         {
             try
             {
-                _logger.LogInformation("/api/search/Transactions");
-
-                //TODO model is valid
+                _logger.LogInformation($"/api/search/Transactions");
 
                 var result = await _transactionSearchService.Search(transactionSearchRequest);
+
+                _logger.LogInformation($"Returning response");
 
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError("Exception caught!", ex);
+                _logger.LogError(ex, "Exception caught!");
                 return BadRequest("An error has occured");
             }
         }
