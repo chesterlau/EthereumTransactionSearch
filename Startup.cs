@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using EthereumTransactionSearch.Services;
 using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,10 @@ namespace EthereumTransactionSearch
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+			services.AddHttpClient();
+
+			services.AddTransient<ITransactionSearchService, InfuraTransactionSearchService>();
 
 			var infuraSettings = Configuration.GetSection("Infura");
 			services.Configure<InfuraSettings>(infuraSettings);

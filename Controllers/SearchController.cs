@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using EthereumTransactionSearch.Models;
+using EthereumTransactionSearch.Services;
 using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,13 +17,13 @@ namespace EthereumTransactionSearch.Controllers
     [ApiController]
     public class SearchController : Controller
     {
+        private readonly ITransactionSearchService _transactionSearchService;
         private readonly ILogger<SearchController> _logger;
-        private readonly InfuraSettings _infuraSettings;
 
-        public SearchController(IOptions<InfuraSettings> infuraSettings, ILogger<SearchController> logger)
+        public SearchController(ITransactionSearchService transactionSearchService, ILogger<SearchController> logger)
         {
             _logger = logger;
-            _infuraSettings = infuraSettings.Value;
+            _transactionSearchService = transactionSearchService;
         }
 
         [HttpPost, Route("/api/search/Transactions")]
