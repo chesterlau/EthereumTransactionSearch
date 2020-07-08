@@ -32,6 +32,9 @@ namespace EthereumTransactionSearch.Controllers
         public async Task<IActionResult> SearchTransactions()
         {
             _logger.LogInformation("Test");
+
+            await _transactionSearchService.Search(null);
+
             return Ok();
         }
     }

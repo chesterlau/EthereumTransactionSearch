@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EthereumTransactionSearch.Dtos.Infura
+﻿namespace EthereumTransactionSearch.Dtos.Infura
 {
 	public class InfuraTransactionSearchRequest
 	{
+		public string jsonrpc { get; set; }
+
+		public string method { get; set; }
+
+		public object[] @params { get; set;}
+
+		public int id { get; set; }
 	}
 }

@@ -7,5 +7,8 @@ namespace EthereumTransactionSearch.Models
 {
 	public class TransactionSearchRequest
 	{
+		public int BlockNumber { get; set; }
+
+		public string AccountHash { get; set; }
 	}
 }
