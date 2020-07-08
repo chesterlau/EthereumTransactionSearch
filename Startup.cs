@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using EthereumTransactionSearch.Middleware;
 using EthereumTransactionSearch.Services;
 using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -59,6 +60,8 @@ namespace EthereumTransactionSearch
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseMiddleware<LogContextMiddleware>();
 
 			app.UseAuthorization();
 
