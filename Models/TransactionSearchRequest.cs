@@ -9,6 +9,6 @@ namespace EthereumTransactionSearch.Models
 	{
 		public int BlockNumber { get; set; }
 
-		public string AccountHash { get; set; }
+		public string Address { get; set; }
 	}
 }

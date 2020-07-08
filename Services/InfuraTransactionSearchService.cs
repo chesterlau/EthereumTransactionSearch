@@ -30,18 +30,18 @@ namespace EthereumTransactionSearch.Services
 		{
 			try
 			{
-				//TODO log request
+				_logger.LogInformation($"Searching blockNumber: {transactionSearchRequest.BlockNumber} and accountHash: {transactionSearchRequest.Address}");
 
 				HttpClient httpClient = _httpClientFactory.CreateClient();
 
-				//TODO convert block number to hex
+				string blockNumberInHex = $"0x{transactionSearchRequest.BlockNumber.ToString("X")}";
 
 				InfuraTransactionSearchRequest infuraTransactionSearchRequest = new InfuraTransactionSearchRequest
 				{
-					jsonrpc = "2.0",
-					method = "eth_getBlockByNumber",
-					@params = new object[] { "0x8B99C9", true},
-					id = 1
+					Jsonrpc = "2.0",
+					Method = "eth_getBlockByNumber",
+					Params = new object[] { blockNumberInHex, true},
+					Id = 1
 				};
 
 				var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_infuraSettings.BaseUrl}/{_infuraSettings.ProjectId}")
@@ -52,9 +52,11 @@ namespace EthereumTransactionSearch.Services
 				var response = await httpClient.SendAsync(httpRequest);
 				var strContent = await response.Content.ReadAsStringAsync();
 
-				//TODO deserialise object
+				InfuraTransactionSearchResponse infuraTransactionSearchResponse = JsonConvert.DeserializeObject<InfuraTransactionSearchResponse>(strContent);
 
-				//TODO filter out transactions by account hash
+				//TODO filter out transactions by account hash and get ether value from WEI
+
+				//TODO map to transaction search response
 
 			}
 			catch (Exception ex)

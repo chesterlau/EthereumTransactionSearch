@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace EthereumTransactionSearch
@@ -60,6 +61,8 @@ namespace EthereumTransactionSearch
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseSerilogRequestLogging();
 
 			app.UseMiddleware<LogContextMiddleware>();
 

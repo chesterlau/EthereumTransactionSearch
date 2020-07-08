@@ -2,12 +2,12 @@
 {
 	public class InfuraTransactionSearchRequest
 	{
-		public string jsonrpc { get; set; }
+		public string Jsonrpc { get; set; }
 
-		public string method { get; set; }
+		public string Method { get; set; }
 
-		public object[] @params { get; set;}
+		public object[] Params { get; set;}
 
-		public int id { get; set; }
+		public int Id { get; set; }
 	}
 }
