@@ -27,12 +27,11 @@ namespace EthereumTransactionSearch
 							config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
 								  .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
 									  optional: true, reloadOnChange: true);
-							config.AddEnvironmentVariables();
 						})
 						.UseSerilog((ctx, config) =>
 						{
 							config.ReadFrom.Configuration(ctx.Configuration);
-							config.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+							config.MinimumLevel.Override("Microsoft", LogEventLevel.Information);
 							config.MinimumLevel.Override("System", LogEventLevel.Warning);
 						}).UseStartup<Startup>();
 				});
