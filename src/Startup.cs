@@ -57,8 +57,6 @@ namespace EthereumTransactionSearch
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UseHttpsRedirection();
-
 			app.UseRouting();
 
 			app.UseSerilogRequestLogging();
