@@ -5,9 +5,9 @@ namespace EthereumTransactionSearch.Helpers
 {
 	public class ValueConverter
 	{
-		public static int HexToInteger(string prefixedHex)
+		public static long HexToLong(string prefixedHex)
 		{
-			int value = Convert.ToInt32(prefixedHex, 16);
+			long value = Convert.ToInt64(prefixedHex, 16);
 			return value;
 		}
 

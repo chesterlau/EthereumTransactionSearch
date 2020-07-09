@@ -64,13 +64,13 @@ namespace EthereumTransactionSearch.Services
 				Transactions = transactions.Select(m => new TransactionResults 
 				{
 					BlockHash = m.BlockHash,
-					BlockNumber = ValueConverter.HexToInteger(m.BlockNumber),
+					BlockNumber = ValueConverter.HexToLong(m.BlockNumber),
 					From = m.From,
 					To = m.To,
 					Gas = UnitConversion.Convert.FromWei(ValueConverter.HexToBigInt(m.Gas), UnitConversion.EthUnit.Ether),
 					Hash = m.Hash,
 					Value = UnitConversion.Convert.FromWei(ValueConverter.HexToBigInt(m.Value), UnitConversion.EthUnit.Ether),
-					TransactionIndex = ValueConverter.HexToInteger(m.TransactionIndex)
+					TransactionIndex = ValueConverter.HexToLong(m.TransactionIndex)
 				}).ToList()
 			};
 

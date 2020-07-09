@@ -32,7 +32,7 @@ namespace EthereumTransactionSearch
                 c.SwaggerDoc("v1",
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
-                        Title = "Plan Calculator",
+                        Title = "Ethereum Transaction Search",
                         Version = "v1"
                     });
 
