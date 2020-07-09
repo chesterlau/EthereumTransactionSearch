@@ -65,6 +65,10 @@ namespace EthereumTransactionSearch
 
 			app.UseAuthorization();
 
+			app.UseCors(
+				options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+			);
+
 			app.UseSwagger();
 			app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ethereum Transaction Search V1"); });
 
