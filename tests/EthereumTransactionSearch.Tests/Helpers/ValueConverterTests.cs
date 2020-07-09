@@ -17,5 +17,16 @@ namespace EthereumTransactionSearch.Tests.Helpers
             //Assert
             Assert.Equal(expectedResult, result);
 		}
-	}
+
+        [Theory]
+        [InlineData("0x174876e800", 100000000000)]
+        public void HexToBigInt_Converts_Value_Correctly(string hexValue, long expectedResult)
+        {
+            //Act
+            var result = ValueConverter.HexToBigInt(hexValue);
+
+            //Assert
+            Assert.Equal(expectedResult, result);
+        }
+    }
 }
