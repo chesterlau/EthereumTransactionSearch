@@ -82,10 +82,11 @@ namespace EthereumTransactionSearch.Tests.Controllers
 
 			//Act
 			var response = await controller.SearchTransactions(transactionSearchRequest) as BadRequestObjectResult;
+			var responseObject = response.Value as ApiResult;
 
 			//Assert
 			Assert.Equal(400, response.StatusCode);
-			Assert.Equal("An error has occured", response.Value);
+			Assert.Equal("An error has occured", responseObject.ErrorMessage);
 
 			mockTransactionSearchService.VerifyAll();
 			mockLogger.VerifyAll();

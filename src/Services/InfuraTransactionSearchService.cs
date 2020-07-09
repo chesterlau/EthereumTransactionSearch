@@ -10,11 +10,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static EthereumTransactionSearch.Models.Enumerations;
 
 namespace EthereumTransactionSearch.Services
 {
 	public class InfuraTransactionSearchService : ITransactionSearchService
 	{
+		private const string JSONRPC = "2.0";
 		private readonly InfuraSettings _infuraSettings;
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly ILogger<InfuraTransactionSearchService> _logger;
@@ -36,8 +38,8 @@ namespace EthereumTransactionSearch.Services
 
 			InfuraTransactionSearchRequest infuraTransactionSearchRequest = new InfuraTransactionSearchRequest
 			{
-				Jsonrpc = "2.0",
-				Method = "eth_getBlockByNumber",
+				Jsonrpc = JSONRPC,
+				Method = InfuraMethod.eth_getBlockByNumber.ToString(),
 				Params = new object[] { blockNumberInHex, true},
 				Id = 1
 			};

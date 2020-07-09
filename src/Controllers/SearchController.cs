@@ -39,7 +39,7 @@ namespace EthereumTransactionSearch.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception caught!");
-                return BadRequest("An error has occured");
+                return BadRequest(new ApiResult { ErrorMessage = "An error has occured" });
             }
         }
     }
