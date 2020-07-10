@@ -59,7 +59,8 @@ namespace EthereumTransactionSearch.Services
 
 			InfuraTransactionSearchResponse infuraTransactionSearchResponse = JsonConvert.DeserializeObject<InfuraTransactionSearchResponse>(strContent);
 			
-			var transactions = infuraTransactionSearchResponse.Result.Transactions.Where(m => (m.From == transactionSearchRequest.Address || m.To == transactionSearchRequest.Address)).ToList();
+			var transactions = infuraTransactionSearchResponse.Result.Transactions.Where(m => (string.Equals(m.From,transactionSearchRequest.Address, System.StringComparison.OrdinalIgnoreCase) 
+			|| string.Equals(m.To, transactionSearchRequest.Address, System.StringComparison.OrdinalIgnoreCase))).ToList();
 
 			TransactionSearchResponse transactionSearchResponse = new TransactionSearchResponse
 			{ 
