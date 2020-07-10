@@ -86,7 +86,7 @@ namespace EthereumTransactionSearch.Tests.Controllers
 
 			//Assert
 			Assert.Equal(400, response.StatusCode);
-			Assert.Equal("An error has occured", responseObject.ErrorMessage);
+			Assert.Equal("An error has occured", responseObject.Title);
 
 			mockTransactionSearchService.VerifyAll();
 			mockLogger.VerifyAll();
