@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
+using Polly.Extensions.Http;
 using Serilog;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 
 namespace EthereumTransactionSearch
@@ -41,8 +44,10 @@ namespace EthereumTransactionSearch
                 c.IncludeXmlComments(xmlPath);
             });
 
-			services.AddHttpClient();
-
+			services.AddHttpClient<ITransactionSearchService, InfuraTransactionSearchService>()
+				.SetHandlerLifetime(TimeSpan.FromMinutes(5))
+				.AddPolicyHandler(GetRetryPolicy()); ;
+				
 			services.AddTransient<ITransactionSearchService, InfuraTransactionSearchService>();
 
 			var infuraSettings = Configuration.GetSection("Infura");
@@ -76,6 +81,15 @@ namespace EthereumTransactionSearch
 			{
 				endpoints.MapControllers();
 			});
+		}
+
+		static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+		{
+			return HttpPolicyExtensions
+				.HandleTransientHttpError()
+				.OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+				.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+																			retryAttempt)));
 		}
 	}
 }
