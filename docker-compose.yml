@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  ethereumtransactionsearch:
+    image: ethereumtransactionsearch:latest
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    ports:
+      - 8000:5000
