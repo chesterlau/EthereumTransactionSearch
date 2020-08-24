@@ -61,7 +61,7 @@ stages:
             - task: AzureRmWebAppDeployment@4
               displayName: 'Azure App Service Deploy: ethereumtransactionsearch'
               inputs:
-                azureSubscription: 'Chester Azure PAYG'
+                azureSubscription: '$(azureSubscriptionEndpoint)'
                 appType: webAppContainer
                 WebAppName: ethereumtransactionsearch
                 DockerNamespace: '$(azureContainerRegistry)'
