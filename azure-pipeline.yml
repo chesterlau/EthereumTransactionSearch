@@ -1,0 +1,37 @@
+trigger:
+  - master
+
+pool:
+  name: Azure Pipelines
+  vmImage: 'ubuntu-20.04'
+  
+variables:
+  BuildConfiguration: 'release'
+
+steps:
+- task: Docker@1
+  displayName: 'Build an image'
+  inputs:
+    azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+    azureContainerRegistry: '$(azureContainerRegistry)'
+    includeLatestTag: true
+    useDefaultContext: false
+    buildContext: '$(Build.SourcesDirectory)'
+
+- task: Docker@1
+  displayName: 'Push an image'
+  inputs:
+    azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+    azureContainerRegistry: '$(azureContainerRegistry)'
+    command: 'Push an image'
+    
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Azure App Service Deploy: ethereumtransactionsearch'
+  inputs:
+    azureSubscription: 'Chester Azure PAYG'
+    appType: webAppContainer
+    WebAppName: ethereumtransactionsearch
+    DockerNamespace: '$(azureContainerRegistry)'
+    DockerRepository: '$(azureContainerRepository)'
+    DockerImageTag: '$(Build.BuildId)'
+
