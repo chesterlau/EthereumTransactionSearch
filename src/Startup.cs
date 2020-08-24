@@ -35,7 +35,7 @@ namespace EthereumTransactionSearch
                 c.SwaggerDoc("v1",
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
-                        Title = "Ethereum Transaction Search",
+                        Title = "Ethereum Transaction Search API",
                         Version = "v1"
                     });
 
