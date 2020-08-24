@@ -9,6 +9,24 @@ variables:
   BuildConfiguration: 'release'
 
 steps:
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: '**/tests/**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --collect "XPlat Code coverage" -- RunConfiguration.DisableAppDomain=true'
+
+- script: |
+    dotnet tool install dotnet-reportgenerator-globaltool --tool-path .   
+    ./reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory) -reporttypes:"Cobertura"
+  displayName: 'Generate code coverage'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: ./Cobertura.xml
+
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
