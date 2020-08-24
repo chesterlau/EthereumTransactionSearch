@@ -3,11 +3,11 @@ WORKDIR /app
 EXPOSE 5000
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /worksrc
-COPY ["src/EthereumTransactionSearch.csproj", "worksrc/"]
-RUN dotnet restore "worksrc/EthereumTransactionSearch.csproj"
+WORKDIR /src
+COPY ["src/EthereumTransactionSearch.csproj", "src/"]
+RUN dotnet restore "src/EthereumTransactionSearch.csproj"
 COPY . .
-WORKDIR "/worksrc/src"
+WORKDIR "/src/src"
 RUN dotnet build "EthereumTransactionSearch.csproj" -c Release -o /app/build
 
 FROM build AS publish
