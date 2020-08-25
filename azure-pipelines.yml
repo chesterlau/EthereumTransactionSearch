@@ -54,7 +54,7 @@ stages:
                 command: 'Push an image'
                 
     - stage: Deploy
-      displayName: 'Deploy container'
+      displayName: 'Deploy Dev'
       jobs:
       - job: RunScripts
         steps:
