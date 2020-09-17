@@ -1,10 +1,14 @@
 using EthereumTransactionSearch.Middleware;
 using EthereumTransactionSearch.Services;
+using EthereumTransactionSearch.Services.HealthChecks;
 using EthereumTransactionSearch.Settings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Polly;
 using Polly.Extensions.Http;
@@ -29,6 +33,9 @@ namespace EthereumTransactionSearch
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+
+			services.AddHealthChecks()
+				.AddCheck<SystemHealthCheck>("system_health_check");
 
 			services.AddSwaggerGen(c =>
             {
@@ -63,6 +70,19 @@ namespace EthereumTransactionSearch
 			}
 
 			app.UseRouting();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+				{
+					ResultStatusCodes =
+					{
+						[HealthStatus.Healthy] = StatusCodes.Status200OK,
+						[HealthStatus.Degraded] = StatusCodes.Status200OK,
+						[HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+					}
+				});
+			});
 
 			app.UseSerilogRequestLogging();
 
