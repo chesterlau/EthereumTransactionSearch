@@ -47,7 +47,7 @@ namespace EthereumTransactionSearch.Services
 				Id = 1
 			};
 
-			_logger.LogInformation($"The infura token from config is: {_configuration["InfuraToken"]}");
+			_logger.LogInformation($"The infura token from config is: {_configuration["InfuraToken1"]}");
 			_logger.LogInformation($"The token from infura settings is {_infuraSettings.Token}");
 
 			var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_infuraSettings.BaseUrl}/{_infuraSettings.Token}")
