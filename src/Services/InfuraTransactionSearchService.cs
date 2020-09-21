@@ -2,7 +2,6 @@
 using EthereumTransactionSearch.Helpers;
 using EthereumTransactionSearch.Models;
 using EthereumTransactionSearch.Settings;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Nethereum.Util;
@@ -19,14 +18,12 @@ namespace EthereumTransactionSearch.Services
 	{
 		private const string JSONRPC = "2.0";
 		private readonly InfuraSettings _infuraSettings;
-		private readonly IConfiguration _configuration;
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly ILogger<InfuraTransactionSearchService> _logger;
 
-		public InfuraTransactionSearchService(IConfiguration configuration, IOptions<InfuraSettings> infuraSettings, IHttpClientFactory httpClientFactory, ILogger<InfuraTransactionSearchService> logger)
+		public InfuraTransactionSearchService(IOptions<InfuraSettings> infuraSettings, IHttpClientFactory httpClientFactory, ILogger<InfuraTransactionSearchService> logger)
 		{
 			_httpClientFactory = httpClientFactory;
-			_configuration = configuration;
 			_infuraSettings = infuraSettings.Value;
 			_logger = logger;
 		}
@@ -47,7 +44,6 @@ namespace EthereumTransactionSearch.Services
 				Id = 1
 			};
 
-			_logger.LogInformation($"The infura token from config is: {_configuration["InfuraToken1"]}");
 			_logger.LogInformation($"The token from infura settings is {_infuraSettings.Token}");
 
 			var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_infuraSettings.BaseUrl}/{_infuraSettings.Token}")
