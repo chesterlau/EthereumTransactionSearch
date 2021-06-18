@@ -30,7 +30,7 @@ namespace EthereumTransactionSearch.Services
 
 		public async Task<TransactionSearchResponse> Search(TransactionSearchRequest transactionSearchRequest)
 		{
-			_logger.LogInformation($"Searching blockNumber: {transactionSearchRequest.BlockNumber} and accountHash: {transactionSearchRequest.Address}");
+			_logger.LogInformation("Searching blockNumber: {BlockNumber} and address: {Address}", transactionSearchRequest.BlockNumber, transactionSearchRequest.Address);
 
 			HttpClient httpClient = _httpClientFactory.CreateClient();
 
@@ -49,11 +49,11 @@ namespace EthereumTransactionSearch.Services
 				Content = new StringContent(JsonConvert.SerializeObject(infuraTransactionSearchRequest), Encoding.UTF8, "application/json")
 			};
 
-			_logger.LogInformation($"Sending request to Infura");
+			_logger.LogInformation("Sending request to Infura");
 
 			var response = await httpClient.SendAsync(httpRequest);
 
-			_logger.LogInformation($"Received request from Infura");
+			_logger.LogInformation("Received request from Infura");
 
 			var strContent = await response.Content.ReadAsStringAsync();
 
@@ -79,7 +79,7 @@ namespace EthereumTransactionSearch.Services
 				}).ToList()
 			};
 
-			_logger.LogInformation($"Searching transactions completed");
+			_logger.LogInformation("Searching transactions completed");
 
 			return transactionSearchResponse;
 		}

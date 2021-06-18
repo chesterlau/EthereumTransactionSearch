@@ -28,11 +28,11 @@ namespace EthereumTransactionSearch.Controllers
         {
             try
             {
-                _logger.LogInformation($"/api/search/Transactions");
+                _logger.LogInformation("/api/search/Transactions");
 
                 var result = await _transactionSearchService.Search(transactionSearchRequest);
 
-                _logger.LogInformation($"Returning response");
+                _logger.LogInformation("Returning response");
 
                 return Ok(result);
             }
